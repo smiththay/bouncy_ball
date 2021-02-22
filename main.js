@@ -1,8 +1,12 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+const counter = document.getElementById('counter');
+
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
+
+let counters = 0
 
 function random(min, max) {
   const num = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -38,12 +42,14 @@ function Ball(x, y, velX, velY, color, size) {
   
     if ((this.y - this.size) <= 0) {
       this.velY = -(this.velY);
+      
+      counter.textContent=(counters);
     }
   
     this.x += this.velX;
     this.y += this.velY;
   }
-  let balls = [];
+ 
   
   Ball.prototype.collisionDetect = function() {
     for (let j = 0; j < balls.length; j++) {
@@ -53,11 +59,18 @@ function Ball(x, y, velX, velY, color, size) {
         const distance = Math.sqrt(dx * dx + dy * dy);
   
         if (distance < this.size + balls[j].size) {
-          balls[j].color = this.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) +')';
-        }
-      }
+        balls[j].color = this.color = 'rgb(' + random(0, 100) + ',' + random(0, 55) + ',' + random(0, 200) +')';  
+        counters ++;
+    }      
+        
+    }
+
+
+      
     }
   }
+
+let balls = [];
 
 while (balls.length < 25) {
   let size = random(10,20);
@@ -66,7 +79,7 @@ while (balls.length < 25) {
     random(0 + size,height - size),
     random(-7,7),
     random(-7,7),
-    'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) +')',
+    'rgb(' + random(0,100) + ',' + random(0,55) + ',' + random(0,255) +')',
     size
   );
 
